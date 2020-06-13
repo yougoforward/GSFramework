@@ -138,9 +138,7 @@ class gsnet_Module(nn.Module):
         out = self.project(y2)
         
         #gp
-        gp = self.gap(x)
-        feat4 = F.interpolate(gp, (h, w), **self._up_kwargs)
-        
+        gp = self.gap(x)        
         # se
         se = self.se(gp)
         out = out + se*out
@@ -148,7 +146,7 @@ class gsnet_Module(nn.Module):
         #non-local
         out = self.pam0(out)
 
-        out = torch.cat([out, feat4], dim=1)
+        out = torch.cat([out, gp.expand(n,c,h,w)], dim=1)
         return out, gp
 
 def get_gsnetnet(dataset='pascal_voc', backbone='resnet50', pretrained=False,
