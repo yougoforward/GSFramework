@@ -80,9 +80,9 @@ class gsnetPooling(nn.Module):
         bs, _, h, w = x.size()
         pool = self.gap(x)
 
-        # return F.interpolate(pool, (h, w), **self._up_kwargs)
+        return F.interpolate(pool, (h, w), **self._up_kwargs)
         # return pool.repeat(1,1,h,w)
-        return pool.expand(bs, self.out_chs, h, w)
+        # return pool.expand(bs, self.out_chs, h, w)
 
 
 class gsnet_Module(nn.Module):
@@ -139,6 +139,7 @@ class gsnet_Module(nn.Module):
         
         #gp
         gp = self.gap(x)
+        feat4 = F.interpolate(gp, (h, w), **self._up_kwargs)
         
         # se
         se = self.se(gp)
@@ -147,7 +148,7 @@ class gsnet_Module(nn.Module):
         #non-local
         out = self.pam0(out)
 
-        out = torch.cat([out, gp.expand(n, c, h, w)], dim=1)
+        out = torch.cat([out, feat4], dim=1)
         return out, gp
 
 def get_gsnetnet(dataset='pascal_voc', backbone='resnet50', pretrained=False,
