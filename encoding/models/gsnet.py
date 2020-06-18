@@ -120,7 +120,7 @@ class gsnet_Module(nn.Module):
                             nn.Sigmoid())
 
 
-        self.pam0 = PAM_Module(in_dim=out_channels, key_dim=out_channels//8,value_dim=out_channels,out_dim=out_channels,norm_layer=norm_layer)
+        self.pam0 = PAM_Module(in_dim=out_channels, key_dim=out_channels//2,value_dim=out_channels,out_dim=out_channels,norm_layer=norm_layer)
     def forward(self, x):
         feat0 = self.b0(x)
         feat1 = self.b1(x)
@@ -166,7 +166,8 @@ class PAM_Module(nn.Module):
     def __init__(self, in_dim, key_dim, value_dim, out_dim, norm_layer):
         super(PAM_Module, self).__init__()
         self.chanel_in = in_dim
-        self.pool = nn.MaxPool2d(kernel_size=2)
+        # self.pool = nn.MaxPool2d(kernel_size=2)
+        self.pool = nn.AvgPool2d(kernel_size=2)
 
         self.query_conv = nn.Conv2d(in_channels=in_dim, out_channels=key_dim, kernel_size=1)
         self.key_conv = nn.Conv2d(in_channels=in_dim, out_channels=key_dim, kernel_size=1)
