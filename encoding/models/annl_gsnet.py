@@ -119,7 +119,7 @@ class annl_gsnet_Module(nn.Module):
                             nn.Conv2d(out_channels, out_channels, 1, bias=True),
                             nn.Sigmoid())
 
-        self.pam0 = APAM_Module(in_dim=out_channels, key_dim=out_channels//2,value_dim=out_channels//2,out_dim=out_channels,norm_layer=norm_layer)
+        self.pam0 = APAM_Module(in_dim=out_channels, key_dim=out_channels//8,value_dim=out_channels,out_dim=out_channels,norm_layer=norm_layer)
     def forward(self, x):
         feat0 = self.b0(x)
         feat1 = self.b1(x)
