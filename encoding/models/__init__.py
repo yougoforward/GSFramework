@@ -16,6 +16,7 @@ from .gsnet_aspp_base import *
 from .gsnet_nosa import *
 from .psaa_nosa import *
 from .annl_gsnet import *
+from .annl_fcn import *
 
 def get_segmentation_model(name, **kwargs):
     from .fcn import get_fcn
@@ -34,5 +35,6 @@ def get_segmentation_model(name, **kwargs):
         'gsnet_nosa': get_gsnet_nosanet,
         'psaa_nosa': get_psaa_nosanet,
         'annl_gsnet': get_annl_gsnetnet,
+        'annl_fcn': get_annl_fcn,
     }
     return models[name.lower()](**kwargs)
