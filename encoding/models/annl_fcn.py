@@ -15,29 +15,6 @@ from .base import BaseNet
 __all__ = ['annl_fcn', 'get_annl_fcn', 'get_annl_fcn_resnet50_pcontext', 'get_annl_fcn_resnet50_ade']
 
 class annl_fcn(BaseNet):
-    r"""Fully Convolutional Networks for Semantic Segmentation
-
-    Parameters
-    ----------
-    nclass : int
-        Number of categories for the training dataset.
-    backbone : string
-        Pre-trained dilated backbone network type (default:'resnet50'; 'resnet50',
-        'resnet101' or 'resnet152').
-    norm_layer : object
-        Normalization layer used in backbone network (default: :class:`mxnet.gluon.nn.BatchNorm`;
-
-
-    Reference:
-
-        Long, Jonathan, Evan Shelhamer, and Trevor Darrell. "Fully convolutional networks
-        for semantic segmentation." *CVPR*, 2015
-
-    Examples
-    --------
-    >>> model = annl_fcn(nclass=21, backbone='resnet50')
-    >>> print(model)
-    """
     def __init__(self, nclass, backbone, aux=True, se_loss=False, norm_layer=nn.BatchNorm2d, **kwargs):
         super(annl_fcn, self).__init__(nclass, backbone, aux, se_loss, norm_layer=norm_layer, **kwargs)
         self.head = annl_fcnHead(2048, nclass, norm_layer)
